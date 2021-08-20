@@ -14,8 +14,6 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-app.use("/", workoutRoutes);
-
 mongoose.connect(
   process.env.MONGODB_URI || 'mongodb://localhost/workout',
   {
@@ -25,6 +23,8 @@ mongoose.connect(
     useFindAndModify: false
   }
 );
+
+app.use("/", workoutRoutes);
 
 app.listen(PORT, () => {
     console.log(`App is up and running on port ${PORT}!`);
