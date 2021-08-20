@@ -30,26 +30,38 @@ router.put("/api/workouts/:id", async (req, res) => {
         {'_id': req.params.id},
         {$push: {exercises: req.body}}
     );
-    res.json(exercise)
-}   catch(err) {
-    res.status(500).json(err)
+    res.json(exercise);
+    }catch(err) {
+    res.status(500).json(err);
 }})
+
 //get workouts
-router.get("/api/workouts", (req, res) =>{
-    db.Workout.aggregate([
-    { $sort: {day: -1}},
-    { $addFields: {totalDuration: "$exercise.duration" }}])
-    .then(lastWorkout => {
-        res.json(lastWorkout)
-    }).catch(err => {
-        res.status(500).json(err);
-    });
+router.get("/api/workouts", async (req, res) =>{
+    try{
+    const lastWorkout = await db.Workout.aggregate([
+    {$addFields: {totalDuration: 
+      {$sum:`$exercises.duration`}
+    }}])
+    res.json(lastWorkout);
+    }catch(err) {
+      res.status(500).json(err);
+    };
 });
 
-//get workout history for past week
+//get workout history
 
-// router.get("/api/workouts/range")
-
+router.get("/api/workouts/range", async (req, res) =>{
+  try{
+  const pastWorkouts = await db.Workout.aggregate([
+  {$sort: {day: -1}},
+  {$addFields: {totalDuration: 
+    {$sum:`$exercises.duration`}
+  }}]).limit(7)
+  res.json(pastWorkouts);
+  }catch(err) {
+    res.status(500).json(err);
+  };
+});
 
 module.exports = router;
 
