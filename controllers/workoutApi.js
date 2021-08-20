@@ -2,7 +2,7 @@ const router = require('express').Router();
 const db = require('../models')
 
 //post a workout
-router.post("/api/workouts", ({ body }, res) => {
+router.post("/workouts", ({ body }, res) => {
     db.Workout.create(body)
       .then(dbWorkout => {
         res.json(dbWorkout);
@@ -13,7 +13,7 @@ router.post("/api/workouts", ({ body }, res) => {
 });
 
 //post many workouts
-router.post("/api/workouts/bulk", ({ body }, res) => {
+router.post("/workouts/bulk", ({ body }, res) => {
     db.Workout.insertMany(body)
       .then(dbWorkout => {
         res.json(dbWorkout);
@@ -24,7 +24,7 @@ router.post("/api/workouts/bulk", ({ body }, res) => {
 });
 
 //update a workout
-router.put("/api/workouts/:id", async (req, res) => {
+router.put("/workouts/:id", async (req, res) => {
     try{
     const exercise = await db.Workout.updateOne(
         {'_id': req.params.id},
@@ -36,7 +36,7 @@ router.put("/api/workouts/:id", async (req, res) => {
 }})
 
 //get workouts
-router.get("/api/workouts", async (req, res) =>{
+router.get("/workouts", async (req, res) =>{
     try{
     const lastWorkout = await db.Workout.aggregate([
     {$addFields: {totalDuration: 
@@ -50,7 +50,7 @@ router.get("/api/workouts", async (req, res) =>{
 
 //get workout history
 
-router.get("/api/workouts/range", async (req, res) =>{
+router.get("/workouts/range", async (req, res) =>{
   try{
   const pastWorkouts = await db.Workout.aggregate([
   {$sort: {day: -1}},
