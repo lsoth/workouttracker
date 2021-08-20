@@ -8,7 +8,7 @@ router.post("/workouts", ({ body }, res) => {
         res.json(dbWorkout);
       })
       .catch(err => {
-        res.status(500).json(err);
+        res.json(err);
       });
 });
 
@@ -19,7 +19,7 @@ router.post("/workouts/bulk", ({ body }, res) => {
         res.json(dbWorkout);
       })
       .catch(err => {
-        res.status(500).json(err);
+        res.json(err);
       });
 });
 
@@ -32,7 +32,7 @@ router.put("/workouts/:id", async (req, res) => {
     );
     res.json(exercise);
     }catch(err) {
-    res.status(500).json(err);
+    res.json(err);
 }})
 
 //get workouts
@@ -44,7 +44,7 @@ router.get("/workouts", async (req, res) =>{
     }}])
     res.json(lastWorkout);
     }catch(err) {
-      res.status(500).json(err);
+      res.json(err);
     };
 });
 
@@ -59,7 +59,7 @@ router.get("/workouts/range", async (req, res) =>{
   }}]).limit(7)
   res.json(pastWorkouts);
   }catch(err) {
-    res.status(500).json(err);
+    res.json(err);
   };
 });
 

@@ -25,7 +25,7 @@ mongoose.connect(
     useFindAndModify: false
   }
 );
-console.log(process.env.MONGODB_URI)
+
 app.listen(PORT, () => {
     console.log(`App is up and running on port ${PORT}!`);
   });
