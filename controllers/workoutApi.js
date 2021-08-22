@@ -3,11 +3,14 @@ const db = require('../models')
 
 //post a workout
 router.post("/workouts", ({ body }, res) => {
+  console.log('H');
     db.Workout.create(body)
       .then(dbWorkout => {
+        console.log(dbWorkout);
         res.json(dbWorkout);
       })
       .catch(err => {
+        console.error(err)
         res.json(err);
       });
 });
